@@ -6,7 +6,6 @@ import { FS_ERROR_TEXT } from '../helpers.js';
 const remove = async () => {
     const execPath = fileURLToPath(import.meta.url);
     const execDirname = dirname(execPath);
-
     const pathToRemove = join(execDirname, 'files', 'fileToRemove.txt');
 
     try {
@@ -17,7 +16,6 @@ const remove = async () => {
         }
         throw err;
     }
-
 };
 
 await remove();

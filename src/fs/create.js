@@ -13,6 +13,7 @@ const create = async () => {
         if(err.code === 'EEXIST') {
             throw new Error('FS operation failed')
         } 
+        throw err;
     } finally {
         fd?.close();
     }

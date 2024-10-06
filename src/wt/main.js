@@ -24,8 +24,13 @@ const performCalculations = async () => {
             })
         })
     }
-    const result = await Promise.all(promises);
-    console.log(result)
+    
+    try {
+        const result = await Promise.all(promises);
+        console.log(result)
+    } catch (e) {
+        throw e
+    }
 };
 
 await performCalculations();

@@ -32,8 +32,11 @@ const calculateHash = async () => {
 
         const input = fs.createReadStream(targetFilePath);
         const hash = crypto.createHash('sha256');
-        input.pipe(hash).setEncoding('hex').pipe(addNewLine).pipe(stdout);
-        
+
+        input.pipe(hash).on('error', (e) => {throw e})
+            .setEncoding('hex')
+            .pipe(addNewLine).on('error', (e) => {throw e})
+            .pipe(stdout).on('error', (e) => {throw e});
     } catch (e) {
         throw e
     }

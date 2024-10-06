@@ -1,20 +1,8 @@
 import fs from 'fs';
-import { Transform } from 'stream';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { stdout } from 'process';
-import { FS_ERROR_TEXT, isDestinationExisting } from '../helpers.js';
-
-const addNewLine = new Transform({
-    transform(chunk, encoding, callback) {
-        this.push(chunk);
-        callback();
-    },
-    flush(callback) {
-        this.push('\n');
-        callback();
-    }
-})
+import { FS_ERROR_TEXT, isDestinationExisting, addNewLineStream } from '../helpers.js';
 
 const calculateHash = async () => {
     let crypto
@@ -35,7 +23,7 @@ const calculateHash = async () => {
 
         input.pipe(hash).on('error', (e) => {throw e})
             .setEncoding('hex')
-            .pipe(addNewLine).on('error', (e) => {throw e})
+            .pipe(addNewLineStream).on('error', (e) => {throw e})
             .pipe(stdout).on('error', (e) => {throw e});
     } catch (e) {
         throw e
